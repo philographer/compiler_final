@@ -23,6 +23,7 @@ void fileWrite();
 int i = 0, j = 0;
 char symbol[100][100], temp[100];
 int type[100];
+int temp_type[100];
 int tempNum = 0; // current pointer ex) t0, t1, t2 ... temp value
 int out;
 char tempString[200];
@@ -98,11 +99,6 @@ void threeAddress() {
 void assignOperator() {
     sprintf(tempString,"%s = %s\n", stack[topOfStack-2], stack[topOfStack]);
     fileWrite();
-    if(type[topOfStack-2] != type[topOfStack]) {
-        printf("//warning: type mismatch\n");
-        sprintf(tempString,"//warning: type mismatch");
-        fileWrite();
-	}
     topOfStack -= 2;
 }
 
@@ -161,6 +157,8 @@ void fileWrite() {
 }
 
 int main(int argc, char **argv) {
+    memset(type, -1, 100);
+    memset(temp_type, -1, 100);
     extern int yyparse(void);
     extern FILE *yyin;
     
