@@ -1,0 +1,4 @@
+float a;
+float b;
+a = 2.0E-2;
+b = a + c;
