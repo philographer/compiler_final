@@ -88,9 +88,6 @@ void push() {
 
 void threeAddress() {
     sprintf(tempString,"t%d = %s %s %s\n", tempNum, stack[topOfStack-2], stack[topOfStack-1], stack[topOfStack]);
-	if(type[topOfStack-2] != type[topOfStack-1]) {
-		printf("//warning: type mismatch\n");
-	}
     fileWrite();
     topOfStack -= 2;
     sprintf(tempString,"t%d", tempNum);
@@ -100,8 +97,13 @@ void threeAddress() {
 
 void assignOperator() {
     sprintf(tempString,"%s = %s\n", stack[topOfStack-2], stack[topOfStack]);
-    topOfStack -= 2;
     fileWrite();
+    if(type[topOfStack-2] != type[topOfStack]) {
+        printf("//warning: type mismatch\n");
+        sprintf(tempString,"//warning: type mismatch");
+        fileWrite();
+	}
+    topOfStack -= 2;
 }
 
 void leftMinus() {
@@ -125,11 +127,11 @@ void insert(int input) {
     for(j = 0; j < i; j++) {
         if(strcmp(temp, symbol[j]) == 0){
             if(type[i] == input) {
-                printf("ERROR!\n %s is already declared\n", temp);
+                printf("ERROR!\n%s is already declared\n", temp);
                 exit(1);
             }
             else {
-                printf("ERROR! Multiple Declaration of Varible\n");
+                printf("ERROR!\nMultiple Declaration of Varible\n");
                 exit(1);
             }
         }
@@ -169,7 +171,7 @@ int main(int argc, char **argv) {
     out = open("result", O_CREAT | O_RDWR | O_TRUNC , 00777);
     
     while(yyparse()) {
-        fprintf(stderr,"Error! at parsing\n");
+        fprintf(stderr, "Error! at parsing\n");
         exit(1);
     }
 }

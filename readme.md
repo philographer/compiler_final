@@ -1,4 +1,4 @@
-
+## How To Run
 ```bash
 $ lex scanner.l
 $ yacc parser.y
