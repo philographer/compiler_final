@@ -46,8 +46,8 @@ L : DECLARE
 | EOL
 ;
 
-DECLARE : INT ID{textCopy(); printf("int declare\n");insert(0);} END
-| FLOAT ID{textCopy(); printf("float declare\n"); insert(1);} END
+DECLARE : INT ID{textCopy(); insert(0);} END
+| FLOAT ID{textCopy(); insert(1);} END
 ;
 
 stmt : stmt ADD{push();} term{threeAddress();}
@@ -76,7 +76,6 @@ END : SEMICOLON
 void IDpusher() {
     if(getSymbol(yytext)){
         strcpy(stack[++topOfStack], yytext);
-        printf("id pushed! : %s\n", yytext);
     }
     else{
         printf("ERROR!\n%s is unknown id\n", yytext);
@@ -132,7 +131,6 @@ void insert(int input) {
             }
         }
     }
-    printf("%s is inserted\n", temp);
 	type[i] = input;
 	strcpy(symbol[i], temp);
 	i++;
